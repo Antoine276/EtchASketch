@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Page Title</title>
+
+		<style>
+		#container {
+			display: grid;
+			/*grid-gap: 10px;*/
+		}
+
+		.unit {
+			background-color: blue;
+    		border: solid black;
+			border-width: thin;
+		}
+
+		input {
+			color: black;
+			background-color: blue;
+		}
+
+		#TableButton {
+			color: rgb(0, 255, 72);
+			background-color: black;
+		}
+		</style>
+	</head>
+	
+	<body>
+		<h1 id="Title">Etch-A-Sketch</h1>
+
+		<p>
+			<input id="NbrInput", type="number", placeholder="hello", min="1", max="100", step="1", value="1">
+			<button id="TableButton">Create Table</button>
+		</p>
+
+		<div id = "container"></div>
+		
+		<script src="etchasketch.js"></script>
+	</body>
+</html>
