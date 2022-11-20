@@ -1,25 +1,37 @@
 // Constants definition
 const NbrPixels = 960;
-let RowNbr = 0;
 
 const Container = document.getElementById("container");
 const Input = document.getElementById("NbrInput");
+const Button = document.getElementById("TableButton");
 
-while (isNaN(RowNbr) || RowNbr === 0 || RowNbr > 100) {
-    RowNbr = Math.trunc(Number(prompt("How many rows do you want my boy ? - Maximum : 100")));
-}
+Button.addEventListener("click", () => BuildNewTable(Input.value));
+Input.addEventListener("keypress", (KeyboardEvent) => { if(KeyboardEvent.key == "Enter") {BuildNewTable(Input.value)} });
 
-alert(RowNbr);
 
-Container.style.gridTemplateColumns = `repeat(${RowNbr}, ${NbrPixels/RowNbr}px)`;
-Container.style.gridAutoRows = `${NbrPixels/RowNbr}px`;
+function BuildNewTable(rownbr)
+{
+    // Size safeguard
+    if(rownbr > 100) {
+        alert ("Maximum size : 100 !");
+        rownbr = 100;
+    }
 
-for (let i = 0; i < (RowNbr * RowNbr); i++) {
-    const unit = document.createElement("div");
-    unit.setAttribute("id", `unit${i}`);
-    unit.classList.add("unit");
+    Container.style.gridTemplateColumns = `repeat(${rownbr}, ${NbrPixels/rownbr}px)`;
+    Container.style.gridAutoRows = `${NbrPixels/rownbr}px`;
 
-    unit.addEventListener("mouseover", () => {unit.style.backgroundColor = "red"});
+    // Cleaning Table
+    while (Container.firstChild) {
+        Container.removeChild(Container.lastChild);
+    }
 
-    Container.appendChild(unit);
+    for (let i = 0; i < (rownbr * rownbr); i++) {
+        const unit = document.createElement("div");
+        unit.setAttribute("id", `unit${i}`);
+        unit.classList.add("unit");
+    
+        unit.addEventListener("mouseover", () => {unit.style.backgroundColor = "red"});
+    
+        Container.appendChild(unit);
+    }
 }
