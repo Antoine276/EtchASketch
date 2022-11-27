@@ -1,37 +1,58 @@
 // Constants definition
-const NbrPixels = 960;
-
-const Container = document.getElementById("container");
-const Input = document.getElementById("NbrInput");
-const Button = document.getElementById("TableButton");
-
-Button.addEventListener("click", () => BuildNewTable(Input.value));
-Input.addEventListener("keypress", (KeyboardEvent) => { if(KeyboardEvent.key == "Enter") {BuildNewTable(Input.value)} });
+const iNbrPixels = 960;
+const sCaseColor = "green";
+const bCaseColorRandom = true;
+const iRGBMax = 255;
 
 
-function BuildNewTable(rownbr)
+const eContainer = document.getElementById("container");
+const eInput = document.getElementById("NbrInput");
+const eButton = document.getElementById("TableButton");
+
+eButton.addEventListener("click", () => fBuildNewTable(eInput.value));
+eInput.addEventListener("keypress", (KeyboardEvent) => { if(KeyboardEvent.key == "Enter") {fBuildNewTable(eInput.value)} });
+
+
+function fBuildNewTable(_iRowNbr)
 {
     // Size safeguard
-    if(rownbr > 100) {
+    if(_iRowNbr > 100) {
         alert ("Maximum size : 100 !");
-        rownbr = 100;
+        _iRowNbr = 100;
     }
 
-    Container.style.gridTemplateColumns = `repeat(${rownbr}, ${NbrPixels/rownbr}px)`;
-    Container.style.gridAutoRows = `${NbrPixels/rownbr}px`;
+    eContainer.style.gridTemplateColumns = `repeat(${_iRowNbr}, ${iNbrPixels/_iRowNbr}px)`;
+    eContainer.style.gridAutoRows = `${iNbrPixels/_iRowNbr}px`;
 
     // Cleaning Table
-    while (Container.firstChild) {
-        Container.removeChild(Container.lastChild);
+    while (eContainer.firstChild) {
+        eContainer.removeChild(eContainer.lastChild);
     }
 
-    for (let i = 0; i < (rownbr * rownbr); i++) {
-        const unit = document.createElement("div");
-        unit.setAttribute("id", `unit${i}`);
-        unit.classList.add("unit");
+    for (let i = 0; i < (_iRowNbr * _iRowNbr); i++) {
+        const eUnit = document.createElement("div");
+        eUnit.setAttribute("id", `unit${i}`);
+        eUnit.classList.add("unit");
     
-        unit.addEventListener("mouseover", () => {unit.style.backgroundColor = "red"});
+        eUnit.addEventListener("mouseover", () => {fColorCase(eUnit, sCaseColor, bCaseColorRandom)});
     
-        Container.appendChild(unit);
+        eContainer.appendChild(eUnit);
     }
+}
+
+function fColorCase(_eUnit, _sColor, _bIndRandomColor)
+{
+    if (_bIndRandomColor == false)
+    {
+        _eUnit.style.backgroundColor = _sColor;
+    }
+    else
+    {
+        _eUnit.style.backgroundColor = `rgb(${fRandomNumber(iRGBMax)}, ${fRandomNumber(iRGBMax)}, ${fRandomNumber(iRGBMax)})`;
+    }
+}
+
+function fRandomNumber(_iMax)
+{
+    return Math.floor(Math.random() * _iMax);
 }
